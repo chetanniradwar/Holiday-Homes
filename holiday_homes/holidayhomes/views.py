@@ -1,3 +1,5 @@
+import json
+
 import requests
 from django.shortcuts import render
 
@@ -67,7 +69,8 @@ class HolidayHomeViewSet(viewsets.ModelViewSet):
         if response.status_code != 200:
             return Response({"error": "unable to fetch weather data"}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(response.text, status=status.HTTP_200_OK)
+        weather_data = json.loads(response.text)
+        return Response(weather_data, status=status.HTTP_200_OK)
 
 
 class RoomViewSet(viewsets.ModelViewSet):
