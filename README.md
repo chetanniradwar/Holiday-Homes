@@ -32,5 +32,24 @@ psql -U postgres` to create 'postgres' user with password 'postgres'`
 14. run `python manage.py runserver` to run the development servser on 8000 port
 
 
-## postman link for all api links
-[postman link](https://www.postman.com/chetan-kafqa/workspace/inkredo)
+## Postman link for all api links
+- [postman link](https://www.postman.com/chetan-kafqa/workspace/inkredo)
+
+- please open collection documentation for more details.
+- [documentation link](https://www.postman.com/chetan-kafqa/workspace/inkredo/documentation/20803750-a01fa905-83de-41b8-b177-960ddeec5826?entity=request-20803750-81fe1dff-960f-4bba-94f3-18f934684fac&branch=&version=)
+
+
+## Technologies Used
+- `djangorestframework` - to make REST apis in django
+- `pipenv` - for making virtual environment
+- `requests` - to make https requests using python
+- `json` - to convert json to python dictionary and vice versa
+- `pytest` - for writing unit test cases
+
+## Assumption made
+- Assuming that owner wants to give availability data of future dates also, I made separate table as HomeDetail
+- Assuming that there can be variation in rent price and checkin time and checkout time for each date I added these field in HomeDetail table.
+- Added some extra fields in tables that are required in realtime environment
+- Assuming that there can be multiple pictures of the single home / room, made pictures field as ArrayField to store list of urls
+- Assuming that there can be separate set of pictures for each room of the home, and seperate set for home, hence added picture field in both Room table and HolidayHome table
+
