@@ -9,3 +9,5 @@ ROOM_TYPES = [
     (HALL, HALL),
     (BATH_ROOM, BATH_ROOM)
 ]
+
+OPEN_WEATHER_API_KEY = "e6c3da10fe4812384eceecc5b7fe4ff1"

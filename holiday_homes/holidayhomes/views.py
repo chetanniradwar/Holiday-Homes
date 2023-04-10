@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 
 # Create your views here.
@@ -5,6 +6,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from .enums import OPEN_WEATHER_API_KEY
 from .models import *
 from .serializers import OwnerSerializer, RoomSerializer, HolidayHomeSerializer, HomeDetailSerializer
 
@@ -48,6 +50,24 @@ class HolidayHomeViewSet(viewsets.ModelViewSet):
         home_data.update({"availability_data": home_details_data})
 
         return Response(home_data, status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=True)
+    def retrieve_weather_info(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        try:
+            home_obj = HolidayHome.objects.get(id=pk)
+        except Exception:
+            return Response({"error": "holiday home does not exists"}, status=status.HTTP_400_BAD_REQUEST)
+
+        url = f"https://api.openweathermap.org/data/2.5/weather" \
+              f"?lat={home_obj.latitude}&lon={home_obj.longitude}&appid={OPEN_WEATHER_API_KEY}"
+
+        response = requests.get(url)
+
+        if response.status_code != 200:
+            return Response({"error": "unable to fetch weather data"}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(response.text, status=status.HTTP_200_OK)
 
 
 class RoomViewSet(viewsets.ModelViewSet):
